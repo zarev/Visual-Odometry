@@ -21,9 +21,13 @@ def featureTracking(image_ref, image_cur, px_ref):
 
 
 class PinholeCamera:
-    #fx, fy: focal lengths expressed as pixel units
-    #cx, cy: image principle points
-    #source: https://goo.gl/6LPrcX 
+    """
+    Attributes:
+    fx, fy: focal lengths expressed as pixel units
+    cx, cy: image principle points
+    source: https://goo.gl/6LPrcX 
+    
+    """
     def __init__(self, width, height, fx, fy, cx, cy, 
                 k1=0.0, k2=0.0, p1=0.0, p2=0.0, k3=0.0):
         self.width = width
@@ -37,7 +41,7 @@ class PinholeCamera:
 
 
 class VisualOdometry:
-    def __init__(self, cam, annotations):
+    def __init__(self, cam, poses):
         self.frame_stage = 0
         self.cam = cam
         self.new_frame, self.last_frame = None, None
@@ -48,15 +52,15 @@ class VisualOdometry:
         self.pp = (cam.cx, cam.cy)
         self.trueX, self.trueY, self.trueZ = 0, 0, 0
         self.detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
-        with open(annotations) as f:
-            self.annotations = f.readlines()
+        with open(poses) as f:
+            self.poses = f.readlines()
 
     def getAbsoluteScale(self, frame_id):  #specialized for KITTI odometry dataset
-        ss = self.annotations[frame_id-1].strip().split()
+        ss = self.poses[frame_id-1].strip().split()
         x_prev = float(ss[3])
         y_prev = float(ss[7])
         z_prev = float(ss[11])
-        ss = self.annotations[frame_id].strip().split()
+        ss = self.poses[frame_id].strip().split()
         x = float(ss[3])
         y = float(ss[7])
         z = float(ss[11])
@@ -98,3 +102,4 @@ class VisualOdometry:
         elif(self.frame_stage == STAGE_FIRST_FRAME):
             self.processFirstFrame()
         self.last_frame = self.new_frame
+
