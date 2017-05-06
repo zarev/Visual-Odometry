@@ -24,7 +24,7 @@ shuffle(train_data)
 train=train_data[:-500]
 test=train_data[-500:]
 
-#setting up the labels and the data
+#setting up the labels and the feature sets
 X=np.array([i[0] for i in train]).reshape(-1,WIDTH,HEIGHT,1)
 Y=([i[1] for i in train])
 
