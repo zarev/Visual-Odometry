@@ -1,3 +1,4 @@
+#source: https://github.com/uoip/monoVO-python 
 import numpy as np 
 import cv2
 
@@ -56,15 +57,18 @@ class VisualOdometry:
             self.poses = f.readlines()
 
     def getAbsoluteScale(self, frame_id):  #specialized for KITTI odometry dataset
-        ss = self.poses[frame_id-1].strip().split()
-        x_prev = float(ss[3])
-        y_prev = float(ss[7])
-        z_prev = float(ss[11])
-        ss = self.poses[frame_id].strip().split()
-        x = float(ss[3])
-        y = float(ss[7])
-        z = float(ss[11])
+        #getting the pose for the previous frame
+        pose = self.poses[frame_id-1].strip().split()
+        x_prev = float(pose[3])
+        y_prev = float(pose[7])
+        z_prev = float(pose[11])
+        #getting the pose for the current frame        
+        pose = self.poses[frame_id].strip().split()
+        x = float(pose[3])
+        y = float(pose[7])
+        z = float(pose[11])
         self.trueX, self.trueY, self.trueZ = x, y, z
+        #the absolute scale between the coordinates from the two frames
         return np.sqrt((x - x_prev)*(x - x_prev) + (y - y_prev)*(y - y_prev) + (z - z_prev)*(z - z_prev))
 
     def processFirstFrame(self):

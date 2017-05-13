@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+#adapted from https://github.com/Sentdex/pygta5
 """
 Created on Thu Apr 20 18:21:57 2017
 
