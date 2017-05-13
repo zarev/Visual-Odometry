@@ -30,7 +30,7 @@ model=alexnet(WIDTH,HEIGHT,LR)
 model.load(MODEL_NAME)
 
 
-frames=4000
+frames=500
 
 traj = np.zeros((600,600,3), dtype=np.uint8)
 def main():

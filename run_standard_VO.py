@@ -30,7 +30,7 @@ traj = np.zeros((600,600,3), dtype=np.uint8)
 frames_arr= []
 import time
 start = time.time()
-frames = 1000
+frames = 500
 #drawing trajectories for each frame starting form the 3rd
 for img_id in range(frames):
     img = cv2.imread(img_dir+str(img_id).zfill(6)+'.png', 0)
