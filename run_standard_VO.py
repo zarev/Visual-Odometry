@@ -58,7 +58,8 @@ for img_id in range(frames):
     
     #disaplying the current coordinates in the window     
     text = "Coordinates: x=%2fm y=%2fm z=%2fm"%(x,y,z)
-    cv2.putText(traj, text, (20,40), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 1, 8)
+    cv2.putText(traj, text, (20,40), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 
+                1, 8)
 
     sec = time.time()
     curr_secs = sec - start
@@ -68,7 +69,8 @@ for img_id in range(frames):
     #disaplying the current frame and FPS in the window         
     frame = "Frame: " + str(img_id) + " FPS: " + str(curr_fps)
     cv2.rectangle(traj, (10, 50), (600, 60), (0,0,0), -1)    
-    cv2.putText(traj, frame, (20,60), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 1, 8)
+    cv2.putText(traj, frame, (20,60), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 
+                1, 8)
     
     cv2.imshow('Road facing camera', img)
     cv2.imshow('Trajectory', traj)

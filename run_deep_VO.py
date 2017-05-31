@@ -30,7 +30,7 @@ model=alexnet(WIDTH,HEIGHT,LR)
 model.load(MODEL_NAME)
 
 
-frames=500
+frames=1000
 
 traj = np.zeros((600,600,3), dtype=np.uint8)
 def main():
@@ -49,10 +49,15 @@ def main():
 #        print x*10**25, y*10**25, z*10**25
         print "Predictions (x,y,z):", x,y,z
 #        print int(x*10**30),int(z*10**20)
-
+        xs=x*10**30
+        zs=z*10**20
+        
+        x+=xs-x
+        z+=zs-z
         #offset so the 2 trajectories do not overlap
         x_offset, y_offset = 0, 0
-        draw_x, draw_y = int(x)+(290-x_offset), int(z)+(90-y_offset)
+    
+        draw_x, draw_y = long(x)+(290-x_offset), long(z)+(90-y_offset)
         
         #extracting the true coordinates from the pose
         pose=poses[img_id].strip().split()
@@ -70,7 +75,8 @@ def main():
         
         #disaplying the current coordinates in the window     
         text = "Coordinates: x=%2fm y=%2fm z=%2fm"%(x,y,z)
-        cv2.putText(traj, text, (20,40), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 1, 8)
+        cv2.putText(traj, text, (20,40), cv2.FONT_HERSHEY_PLAIN, 1, 
+                    (255,255,255), 1, 8)
     
         now = time.time()
         curr_secs = now - start
@@ -79,7 +85,8 @@ def main():
         #disaplying the current frame and FPS in the window         
         frame = "Frame: " + str(img_id) + " FPS: " + str(curr_fps)
         cv2.rectangle(traj, (10, 50), (600, 60), (0,0,0), -1)    
-        cv2.putText(traj, frame, (20,60), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 1, 8)
+        cv2.putText(traj, frame, (20,60), cv2.FONT_HERSHEY_PLAIN, 1, 
+                    (255,255,255), 1, 8)
 
         cv2.imshow('Road facing camera', img)
         cv2.imshow('Trajectory', traj)
